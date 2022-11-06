@@ -13,7 +13,12 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - run: make install
+      - uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: "${{ hashFiles('package-lock.json') }}"
+      - if: steps.cache.outputs.cache-hit != 'true'
+        run: make install
       - run: make lint
 
   test:
@@ -23,7 +28,12 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - run: make install
+      - uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: "${{ hashFiles('package-lock.json') }}"
+      - if: steps.cache.outputs.cache-hit != 'true'
+        run: make install
       - run: make test
 
   build:
@@ -36,7 +46,13 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - run: make install
+      - uses: actions/cache@v3
+        id: cache
+        with:
+          path: node_modules
+          key: "${{ hashFiles('package-lock.json') }}"
+      - if: steps.cache.outputs.cache-hit != 'true'
+        run: make install
       - run: make build
       - name: Output JS filename
         id: file_name
