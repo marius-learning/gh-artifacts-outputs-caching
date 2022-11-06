@@ -9,6 +9,6 @@ test:
 
 build:
 	npm run build
-	
+
 deploy:
-	aws s3 sync . s3://${BUCKET_NAME}
+	aws s3 sync dist s3://${BUCKET_NAME}
