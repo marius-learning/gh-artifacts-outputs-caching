@@ -65,9 +65,12 @@ jobs:
           name: build
           retention-days: 1
 
-  deploy:
+  deploy-dev:
     needs: [build]
     runs-on: ubuntu-latest
+    environment:
+      name: dev
+      url: http://github-actions-course-website.s3-website-us-east-1.amazonaws.com/
     env:
       AWS_REGION: us-east-1
       BUCKET_NAME: github-actions-course-website
